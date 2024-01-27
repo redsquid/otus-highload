@@ -1,7 +1,8 @@
-package org.example.service.credentials;
+package org.example.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.domain.Credential;
+import org.example.exception.UsernameAlreadyExistException;
+import org.example.model.Credential;
 import org.example.repository.CredentialRepository;
 import org.springframework.stereotype.Service;
 
@@ -10,9 +11,9 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class CredentialService {
+public class TokenService {
 
-    private static final int LIFETIME_SECONDS = 36000;
+    private static final int LIFETIME_SECONDS = 100000;
 
     private final CredentialRepository repo;
 
@@ -26,7 +27,10 @@ public class CredentialService {
         return c.getAccountId() + ":" + token;
     }
 
-    public void bind(String username, String password, UUID accountId) {
+    public void saveCredentials(String username, String password, UUID accountId) throws UsernameAlreadyExistException {
+        if (repo.exist(username)) {
+            throw new UsernameAlreadyExistException();
+        }
         repo.insert(username, password, accountId);
     }
 
@@ -48,9 +52,5 @@ public class CredentialService {
 
     public void delete(UUID accountId) {
         repo.delete(accountId);
-    }
-
-    public boolean exist(String userName) {
-        return repo.exist(userName);
     }
 }

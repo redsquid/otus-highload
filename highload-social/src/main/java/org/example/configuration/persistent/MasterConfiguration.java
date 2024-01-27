@@ -6,10 +6,14 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.TransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
 @Configuration
+@EnableTransactionManagement
 public class MasterConfiguration {
 
     @Bean
@@ -30,5 +34,10 @@ public class MasterConfiguration {
     @Bean
     public NamedParameterJdbcTemplate masterJdbcTemplate() {
         return new NamedParameterJdbcTemplate(masterDataSource());
+    }
+
+    @Bean
+    public TransactionManager transactionManager() {
+        return new DataSourceTransactionManager(masterDataSource());
     }
 }

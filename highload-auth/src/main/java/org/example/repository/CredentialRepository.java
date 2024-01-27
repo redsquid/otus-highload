@@ -1,8 +1,7 @@
 package org.example.repository;
 
 import lombok.RequiredArgsConstructor;
-import org.example.domain.Credential;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.example.model.Credential;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +14,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CredentialRepository {
 
-    @Qualifier("masterJdbcTemplate")
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     public void insert(String username, String password, UUID accountId) {

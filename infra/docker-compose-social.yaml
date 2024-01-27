@@ -2,6 +2,7 @@ version: '3.3'
 
 volumes:
   pg_project:
+  pg_auth_project:
 
 services:
   postgres_db:
@@ -27,3 +28,14 @@ services:
       - 61613:61613
     volumes:
       - ./rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins
+  postgres_auth_db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: highload
+      POSTGRES_USER: highload
+      POSTGRES_DB: highload_auth
+    volumes:
+      - pg_auth_project:/var/lib/postgresql/data
+    ports:
+      - ${POSTGRES_PORT:-5431}:5432

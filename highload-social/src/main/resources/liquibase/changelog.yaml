@@ -6,12 +6,6 @@ databaseChangeLog:
       file: create-table-account.yaml
       relativeToChangelogFile: 'true'
   - include:
-      file: create-table-credential.yaml
-      relativeToChangelogFile: 'true'
-  - include:
-      file: create-table-token.yaml
-      relativeToChangelogFile: 'true'
-  - include:
       file: create-table-subscription.yaml
       relativeToChangelogFile: 'true'
   - include:

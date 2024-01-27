@@ -3,7 +3,7 @@ package org.example.configuration.security;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.example.service.credentials.CredentialService;
+import org.example.client.auth.AuthFeignClient;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -16,13 +16,13 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class AuthInterceptor implements HandlerInterceptor {
 
-    private final CredentialService service;
+    private final AuthFeignClient client;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String header = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (header != null && header.matches("Bearer \\S+")) {
-            UUID accountId = service.validateToken(header.substring(7));
+            UUID accountId = client.validateToken(header.substring(7));
             if (accountId != null) {
                 SecurityContextHolder.setAccountId(accountId);
                 return true;
