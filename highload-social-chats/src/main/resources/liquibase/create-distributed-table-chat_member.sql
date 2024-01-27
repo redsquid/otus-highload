@@ -1,0 +1,1 @@
+SELECT create_distributed_table('chat_member', 'chat_id', colocate_with => 'chat');

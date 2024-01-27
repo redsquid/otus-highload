@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-subscription
+      author: developer
+      comment: Create subscription table
+      changes:
+        - createTable:
+            schemaName: highload
+            tableName: subscription
+            columns:
+              - column:
+                  name: subscriber_account_id
+                  type: uuid
+                  constraints:
+                    nullable: 'false'
+                    foreignKeyName: fk_subscriber_account_id
+                    references: highload.account(id)
+              - column:
+                  name: publisher_account_id
+                  type: uuid
+                  constraints:
+                    nullable: 'false'
+                    foreignKeyName: fk_publisher_account_id
+                    references: highload.account(id)
+        - addPrimaryKey:
+            columnNames: 'subscriber_account_id, publisher_account_id'
+            constraintName: pk_subscription
+            schemaName: highload
+            tableName: subscription

@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-chat_message
+      author: developer
+      comment: Create chat_message table
+      changes:
+        - createTable:
+            schemaName: highload
+            tableName: chat_message
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+              - column:
+                  name: chat_id
+                  type: uuid
+              - column:
+                  name: account_id
+                  type: uuid
+                  constraints:
+                    nullable: 'false'
+              - column:
+                  name: message
+                  type: text
+                  constraints:
+                    nullable: 'false'
+              - column:
+                  name: creation_date_time
+                  type: timestamp
+                  constraints:
+                    nullable: 'false'
+        - addPrimaryKey:
+            columnNames: 'id, chat_id'
+            onDelete: 'CASCADE'
+            constraintName: pk_chat_message
+            schemaName: highload
+            tableName: chat_message
+        - addForeignKeyConstraint:
+            baseTableSchemaName: "highload"
+            baseTableName: "chat_message"
+            baseColumnNames: "chat_id"
+            constraintName: "fk_chat_id"
+            onDelete: "CASCADE"
+            referencedTableSchemaName: "highload"
+            referencedTableName: "chat"
+            referencedColumnNames: "id"

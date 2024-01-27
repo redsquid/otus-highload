@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-chat
+      author: developer
+      comment: Create chat table
+      changes:
+        - createTable:
+            schemaName: highload
+            tableName: chat
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: 'true'
+                    nullable: 'false'
+              - column:
+                  name: owner_account_id
+                  type: uuid
+                  constraints:
+                    nullable: 'false'
+                    foreignKeyName: fk_account_id
+                    references: highload.account(id)

@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-token
+      author: developer
+      comment: Create token table
+      changes:
+        - createTable:
+            schemaName: highload
+            tableName: token
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: 'true'
+                    nullable: 'false'
+              - column:
+                  name: credential_id
+                  type: uuid
+                  constraints:
+                    nullable: 'false'
+                    foreignKeyName: fk_credential_id
+                    references: highload.credential(id)
+              - column:
+                  name: access_token
+                  type: varchar(64)
+                  constraints:
+                    nullable: 'false'
+              - column:
+                  name: expiry_date
+                  type: datetime
+                  constraints:
+                    nullable: 'false'

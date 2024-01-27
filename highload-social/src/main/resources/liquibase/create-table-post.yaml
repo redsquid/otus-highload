@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-post
+      author: developer
+      comment: Create post table
+      changes:
+        - createTable:
+            schemaName: highload
+            tableName: post
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: 'true'
+                    nullable: 'false'
+              - column:
+                  name: account_id
+                  type: uuid
+                  constraints:
+                    nullable: 'false'
+                    foreignKeyName: fk_account_id
+                    references: highload.account(id)
+              - column:
+                  name: post
+                  type: text
+                  constraints:
+                    nullable: 'false'
+              - column:
+                  name: creation_date_time
+                  type: timestamp
+                  constraints:
+                    nullable: 'false'
+              - createIndex:
+                  indexName: post_account_id_idx
+                  schemaName: highload
+                  tableName: post
+                  columns:
+                    - column:
+                        name: account_id

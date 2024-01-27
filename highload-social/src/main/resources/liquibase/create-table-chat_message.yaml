@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-chat_message
+      author: developer
+      comment: Create chat_message table
+      changes:
+        - createTable:
+            schemaName: highload
+            tableName: chat_message
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: 'true'
+                    nullable: 'false'
+              - column:
+                  name: chat_id
+                  type: uuid
+                  constraints:
+                    nullable: 'false'
+                    foreignKeyName: fk_chat_id
+                    references: highload.chat(id)
+              - column:
+                  name: account_id
+                  type: uuid
+                  constraints:
+                    nullable: 'false'
+                    foreignKeyName: fk_account_id
+                    references: highload.account(id)
+              - column:
+                  name: message
+                  type: text
+                  constraints:
+                    nullable: 'false'
+              - column:
+                  name: creation_date_time
+                  type: timestamp
+                  constraints:
+                    nullable: 'false'

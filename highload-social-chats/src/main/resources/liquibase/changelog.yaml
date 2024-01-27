@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - include:
+      file: create-schema-highload.sql
+      relativeToChangelogFile: 'true'
+  - include:
+      file: create-table-chat.yaml
+      relativeToChangelogFile: 'true'
+  - include:
+      file: create-table-chat_member.yaml
+      relativeToChangelogFile: 'true'
+  - include:
+      file: create-table-chat_message.yaml
+      relativeToChangelogFile: 'true'
+  - include:
+      file: create-distributed-table-chat.sql
+      relativeToChangelogFile: 'true'
+  - include:
+      file: create-distributed-table-chat_member.sql
+      relativeToChangelogFile: 'true'
+  - include:
+      file: create-distributed-table-chat_message.sql
+      relativeToChangelogFile: 'true'

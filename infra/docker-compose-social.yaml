@@ -1,0 +1,29 @@
+version: '3.3'
+
+volumes:
+  pg_project:
+
+services:
+  postgres_db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: highload
+      POSTGRES_USER: highload
+      POSTGRES_DB: highload
+    volumes:
+      - pg_project:/var/lib/postgresql/data
+    ports:
+      - ${POSTGRES_PORT:-5432}:5432
+  redis:
+    image: redis
+    ports:
+      - ${REDIS_PORT:-6379}:6379
+  rabbit:
+    image: rabbitmq:3.13.0-rc.4-management
+    ports:
+      - 15672:15672
+      - 5672:5672
+      - 61613:61613
+    volumes:
+      - ./rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins

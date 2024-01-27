@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-account
+      author: developer
+      comment: Create account table
+      changes:
+        - createTable:
+            schemaName: highload
+            tableName: account
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: 'true'
+                    nullable: 'false'
+              - column:
+                  name: first_name
+                  type: varchar(32)
+                  constraints:
+                    nullable: 'false'
+              - column:
+                  name: last_name
+                  type: varchar(32)
+                  constraints:
+                    nullable: 'false'
+              - column:
+                  name: birth_date
+                  type: date
+              - column:
+                  name: sex
+                  type: varchar(6)
+              - column:
+                  name: city
+                  type: varchar(128)
+              - column:
+                  name: interests
+                  type: varchar(255)
+              - column:
+                  name: rank
+                  type: smallint

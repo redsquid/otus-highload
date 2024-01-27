@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-chat_member
+      author: developer
+      comment: Create chat_member table
+      changes:
+        - createTable:
+            schemaName: highload
+            tableName: chat_member
+            columns:
+              - column:
+                  name: chat_id
+                  type: uuid
+              - column:
+                  name: account_id
+                  type: uuid
+                  constraints:
+                    nullable: 'false'
+        - addPrimaryKey:
+            columnNames: 'chat_id, account_id'
+            onDelete: 'CASCADE'
+            constraintName: pk_chat_member
+            schemaName: highload
+            tableName: chat_member
+        - addForeignKeyConstraint:
+            baseTableSchemaName: "highload"
+            baseTableName: "chat_member"
+            baseColumnNames: "chat_id"
+            constraintName: "fk_chat_id"
+            onDelete: "CASCADE"
+            referencedTableSchemaName: "highload"
+            referencedTableName: "chat"
+            referencedColumnNames: "id"
