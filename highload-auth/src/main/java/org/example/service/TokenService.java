@@ -44,7 +44,7 @@ public class TokenService {
         }
         try {
             UUID accountId = UUID.fromString(data[0]);
-            return repo.unexpiredTokenIsExist(accountId, data[1]) ? accountId : null;
+            return repo.unexpiredTokenIsExist(data[1]) ? accountId : null;
         } catch (IllegalArgumentException e) {
             return null;
         }

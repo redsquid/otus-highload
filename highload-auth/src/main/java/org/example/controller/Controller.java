@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.example.exception.UsernameAlreadyExistException;
 import org.example.model.Credential;
-import org.example.service.TokenService;
+import org.example.service.TokenServiceTarantool;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,7 +21,9 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class Controller {
 
-    private final TokenService service;
+//    private final TokenService service;
+
+    private final TokenServiceTarantool service;
 
     @PostMapping(value = "/credentials", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> createCredentials(@RequestBody Credential credential) {

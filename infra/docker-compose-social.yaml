@@ -16,10 +16,12 @@ services:
       - pg_project:/var/lib/postgresql/data
     ports:
       - ${POSTGRES_PORT:-5432}:5432
+      
   redis:
     image: redis
     ports:
       - ${REDIS_PORT:-6379}:6379
+      
   rabbit:
     image: rabbitmq:3.13.0-rc.4-management
     ports:
@@ -28,6 +30,7 @@ services:
       - 61613:61613
     volumes:
       - ./rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins
+      
   postgres_auth_db:
     image: postgres
     restart: always
@@ -39,3 +42,4 @@ services:
       - pg_auth_project:/var/lib/postgresql/data
     ports:
       - ${POSTGRES_PORT:-5431}:5432
+      

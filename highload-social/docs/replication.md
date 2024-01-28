@@ -12,7 +12,7 @@
     ```
    В windows (cmd)
    ```shell
-    docker run -dit -v /c/work/otus/highload/volumes/pgmaster:/var/lib/postgresql/data -e POSTGRES_PASSWORD=pass -p "5432:5432" --restart=unless-stopped --network=pgnet --name=pgmaster postgres
+   docker run -dit -v /c/work/otus/highload/volumes/pgmaster:/var/lib/postgresql/data -e POSTGRES_PASSWORD=pass -p "5432:5432" --restart=unless-stopped --network=pgnet --name=pgmaster postgres
    
    docker run -dit -v "/c/work/otus/highload/volumes/pgmaster:/var/lib/postgresql/data" -e POSTGRES_USER=highload -e POSTGRES_PASSWORD=highload -e POSTGRES_DB=highload -p "5432:5432" --restart=unless-stopped --network=pgnet --name=pgmaster postgres
    

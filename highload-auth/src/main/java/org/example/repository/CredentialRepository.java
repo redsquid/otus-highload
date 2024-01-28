@@ -60,10 +60,11 @@ public class CredentialRepository {
         jdbcTemplate.update("insert into token values (:id, :credentialId, :accessToken, :expiryDate)", p);
     }
 
-    public boolean unexpiredTokenIsExist(UUID accountId, String token) {
-        String query = "select exists(select 1 as VALUE from credential c join token t on c.id = t.credential_id where " +
-                "c.account_id = :accountId and t.access_token = :token and t.expiry_date > :date)";
-        Map<String, Object> p = Map.of("accountId", accountId, "token", token, "date", LocalDateTime.now());
+    public boolean unexpiredTokenIsExist(String token) {
+        String query = "select exists(select 1 as VALUE from (select * from token where access_token=:token and expiry_date>:date) t " +
+                "join credential c on t.credential_id=c.id)";
+
+        Map<String, Object> p = Map.of("token", token, "date", LocalDateTime.now());
         Boolean result = jdbcTemplate.queryForObject(query, p, Boolean.class);
         return result != null && result;
     }
