@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-advertisement
+      author: developer
+      comment: Create advertisement table
+      changes:
+        - createTable:
+            schemaName: highload
+            tableName: advertisement
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: 'true'
+                    nullable: 'false'
+              - column:
+                  name: account_id
+                  type: uuid
+                  constraints:
+                    nullable: 'false'
+              - column:
+                  name: post_id
+                  type: uuid
+                  constraints:
+                    nullable: 'false'
+              - column:
+                  name: data
+                  type: text
+                  constraints:
+                    nullable: 'false'
+              - column:
+                  name: date_time
+                  type: datetime
+                  constraints:
+                    nullable: 'false'

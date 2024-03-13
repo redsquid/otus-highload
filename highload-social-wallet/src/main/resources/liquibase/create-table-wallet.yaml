@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-wallet
+      author: developer
+      comment: Create wallet table
+      changes:
+        - createTable:
+            schemaName: highload
+            tableName: wallet
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: 'true'
+                    nullable: 'false'
+              - column:
+                  name: account_id
+                  type: uuid
+                  constraints:
+                    nullable: 'false'
+              - column:
+                  name: balance
+                  type: integer
+                  constraints:
+                    nullable: 'false'

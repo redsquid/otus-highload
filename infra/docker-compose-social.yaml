@@ -2,7 +2,9 @@ version: '3.3'
 
 volumes:
   pg_project:
-  pg_auth_project:
+#  pg_auth_project:
+  pg_wallet_preject:
+  pg_advertisement_project:
 
 services:
   postgres_db:
@@ -13,7 +15,7 @@ services:
       POSTGRES_USER: highload
       POSTGRES_DB: highload
     volumes:
-      - pg_project:/var/lib/postgresql/data
+      - pg_project:/var/lib/postgresql/social/data
     ports:
       - ${POSTGRES_PORT:-5432}:5432
       
@@ -31,17 +33,17 @@ services:
     volumes:
       - ./rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins
       
-  postgres_auth_db:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: highload
-      POSTGRES_USER: highload
-      POSTGRES_DB: highload_auth
-    volumes:
-      - pg_auth_project:/var/lib/postgresql/data
-    ports:
-      - ${POSTGRES_PORT:-5431}:5432
+#  postgres_auth_db:
+#    image: postgres
+#    restart: always
+#    environment:
+#      POSTGRES_PASSWORD: highload
+#      POSTGRES_USER: highload
+#      POSTGRES_DB: highload_auth
+#    volumes:
+#      - pg_auth_project:/var/lib/postgresql/data
+#    ports:
+#      - ${POSTGRES_PORT:-5431}:5432
       
   tarantool_auth:
     image: tarantool/tarantool
@@ -53,3 +55,27 @@ services:
       - ./tarantool:/opt/tarantool
     ports:
       - 3301:3301
+      
+  postgres_wallet_db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: highload
+      POSTGRES_USER: highload
+      POSTGRES_DB: wallet_db
+    volumes:
+      - pg_wallet_preject:/var/lib/postgresql/wallet/data
+    ports:
+      - ${POSTGRES_PORT:-5435}:5432
+      
+  postgres_advertisement_db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: highload
+      POSTGRES_USER: highload
+      POSTGRES_DB: advertisement_db
+    volumes:
+      - pg_advertisement_project:/var/lib/postgresql/advertisement/data
+    ports:
+      - ${POSTGRES_PORT:-5436}:5432

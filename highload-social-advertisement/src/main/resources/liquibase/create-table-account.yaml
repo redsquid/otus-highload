@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-account
+      author: developer
+      comment: Create account table
+      changes:
+        - createTable:
+            schemaName: highload
+            tableName: account
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: 'true'
+                    nullable: 'false'
+              - column:
+                  name: access_token
+                  type: varchar(73)
+                  constraints:
+                    nullable: 'false'
+              - column:
+                  name: wallet_id
+                  type: uuid
+                  constraints:
+                    primaryKey: 'true'
+                    nullable: 'false'

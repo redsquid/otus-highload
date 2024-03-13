@@ -4,7 +4,10 @@ volumes:
   chats_pg_project:
   social_pg_project:
   healthcheck-volume:
-
+#  pg_auth_project:
+  pg_wallet_preject:
+  pg_advertisement_project:
+  
 services:
 
   rabbit:
@@ -59,7 +62,7 @@ services:
       POSTGRES_USER: highload
       POSTGRES_DB: highload
     volumes:
-      - social_pg_project:/var/lib/postgresql/data
+      - social_pg_project:/var/lib/postgresql/social/data
     ports:
       - ${POSTGRES_PORT:-5432}:5432
 
@@ -69,7 +72,7 @@ services:
       - ${REDIS_PORT:-6379}:6379
     
   highload-social:
-    image: redsquid/highload-social:0.0.16
+    image: redsquid/highload-social:0.0.18
     restart: always
     depends_on:
       - social_postgres_db
@@ -85,3 +88,74 @@ services:
       - rabbit
     ports:
       - 8082:8080
+      
+#  postgres_auth_db:
+#    image: postgres
+#    restart: always
+#    environment:
+#      POSTGRES_PASSWORD: highload
+#      POSTGRES_USER: highload
+#      POSTGRES_DB: highload_auth
+#    volumes:
+#      - pg_auth_project:/var/lib/postgresql/data
+#    ports:
+#      - ${POSTGRES_PORT:-5431}:5432
+      
+  tarantool_auth:
+    image: tarantool/tarantool
+    command: tarantool /opt/tarantool/init.lua
+    environment:
+      TARANTOOL_USER_NAME: highload 
+      TARANTOOL_USER_PASSWORD: highload
+    volumes:
+      - ./tarantool:/opt/tarantool
+    ports:
+      - 3301:3301
+      
+  highload-auth:
+    image: redsquid/highload-auth:0.0.18
+    restart: always
+    depends_on:
+      - tarantool_auth
+    ports:
+      - 8083:8080
+      
+  postgres_wallet_db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: highload
+      POSTGRES_USER: highload
+      POSTGRES_DB: highload
+    volumes:
+      - pg_wallet_preject:/var/lib/postgresql/wallet/data
+    ports:
+      - ${POSTGRES_PORT:-5435}:5432
+      
+  highload-social-wallet:
+    image: redsquid/highload-social-wallet:0.0.1
+    restart: always
+    depends_on:
+      - postgres_wallet_db
+    ports:
+      - 8084:8080
+      
+  postgres_advertisement_db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: highload
+      POSTGRES_USER: highload
+      POSTGRES_DB: highload
+    volumes:
+      - pg_advertisement_project:/var/lib/postgresql/advertisement/data
+    ports:
+      - ${POSTGRES_PORT:-5436}:5432
+      
+  highload-social-advertisement:
+    image: redsquid/highload-social-advertisement:0.0.1
+    restart: always
+    depends_on:
+      - postgres_advertisement_db
+    ports:
+      - 8085:8080

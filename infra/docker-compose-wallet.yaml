@@ -1,0 +1,18 @@
+version: '3.3'
+
+volumes:
+  pg_project:
+  pg_auth_project:
+
+services:
+  postgres_wallet_db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: highload
+      POSTGRES_USER: highload
+      POSTGRES_DB: wallet_db
+    volumes:
+      - pg_auth_project:/var/lib/postgresql/data
+    ports:
+      - ${POSTGRES_PORT:-5435}:5432

@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - include:
+      file: create-schema-highload.sql
+      relativeToChangelogFile: 'true'
+  - include:
+      file: create-table-wallet.yaml
+      relativeToChangelogFile: 'true'
+  - include:
+      file: create-table-transaction.yaml
+      relativeToChangelogFile: 'true'

@@ -21,10 +21,11 @@ public class PostService {
 
     private final AmqpTemplate ampqTemplate;
 
-    public void post(UUID accountId, String data) {
+    public UUID post(UUID accountId, String data) {
         Post post = repo.insert(new Post(null, accountId, data, LocalDateTime.now()));
         feedCacheManager.rebuild(post);
         ampqTemplate.convertAndSend("amq.topic", accountId.toString(), post);
+        return post.getId();
     }
 
     public List<Post> findPosts(List<UUID> ids) {

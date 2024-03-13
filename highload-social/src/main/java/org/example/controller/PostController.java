@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 @RestController
 @RequiredArgsConstructor
 public class PostController {
@@ -14,7 +16,7 @@ public class PostController {
     private final PostService service;
 
     @PostMapping("/post")
-    public void post(@RequestBody String data) {
-        service.post(SecurityContextHolder.getAccountId(), data);
+    public UUID post(@RequestBody String data) {
+        return service.post(SecurityContextHolder.getAccountId(), data);
     }
 }
